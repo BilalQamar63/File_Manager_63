@@ -45,27 +45,26 @@ connectDB();
 const app = express();
 app.use(express.json());
 
+// ✅ YOUR FRONTEND DEPLOYED LINK HERE
 const FrontendUrl = process.env.FRONTEND_URL;
 
 app.use(cors({
-  origin: FrontendUrl, // ✅ no curly braces
+  origin: FrontendUrl,
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // ✅ allow preflight methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // ✅ for tokens and JSON
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-// ✅ handle preflight OPTIONS requests
+// ✅ Must handle preflight requests
 app.options("*", cors());
 
-// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/task", taskRoutes);
 
-// PORT FROM ENV
 const PORT = process.env.PORT || 5000;
-
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
 
 module.exports = app;
+
