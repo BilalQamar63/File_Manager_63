@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const User = require("../models/authModel");
 require("dotenv").config(); 
+const FrontendUrl = process.env.FRONTEND_URL
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -19,7 +20,7 @@ const sendEmail = async (userId, subject, resetToken) => {
       throw new Error("User not found or email missing");
     }
 
-    const resetLink = `${process.env.FRONTEND_URL}/resetPassword?token=${resetToken}&id=${userId}`;
+    const resetLink = `${FrontendUrl}/resetPassword?token=${resetToken}&id=${userId}`;
 
     const mailOptions = {
       from: `"Task Management" <${process.env.EMAIL_USER}>`,
